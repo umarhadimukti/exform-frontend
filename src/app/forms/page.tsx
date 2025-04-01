@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import { MdOutlinePostAdd } from "react-icons/md";
 
 const Forms = () => {
   return (
@@ -10,10 +11,11 @@ const Forms = () => {
                     <div>
                         <Image src="/images/transparent_exform_logo.png" className='bg-transparent' alt="logo" width={100} height={100} priority quality={100}/>
                     </div>
-                    <div className="flex flex-col">
-                        <div className="p-4 rounded-md shadow bg-black hover:bg-black/80 transition-all cursor-pointer text-center text-white tracking-wide">
-                            + empty form
+                    <div className="flex flex-col items-start">
+                        <div className="px-8 py-2 rounded-sm shadow outline-2 outline-black hover:bg-black/80 transition-all cursor-pointer text-center text-white tracking-wide group">
+                            <MdOutlinePostAdd className='text-2xl text-black group-hover:text-white transition-all'/>
                         </div>
+                        <div className='text-sm tracking-wide mt-1'>empty form</div>
                     </div>
                 </div>
             </div>
