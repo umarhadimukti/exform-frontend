@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
-import { MdOutlinePostAdd } from "react-icons/md";
-import Header from '@/components/header';
+import { MdOutlinePostAdd } from "react-icons/md"
+import Header from '@/components/header'
 
 const Forms: React.FC = () => {
   return (
@@ -17,6 +17,12 @@ const Forms: React.FC = () => {
                             <MdOutlinePostAdd className='text-2xl text-black group-hover:text-white transition-all'/>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div className="mt-5 mb-6 container mx-auto">
+                <div className='flex justify-between items-center'>
+                    <h5 className='tracking-wide text-gray-900'>Latest Form</h5>
                 </div>
             </div>
 
