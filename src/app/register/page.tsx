@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import Image from 'next/image';
+import Link from 'next/link';
 
 const formSchema = z.object({
     firstname: z.string().min(3, 'firstname at least 3 characters'),
@@ -102,7 +103,12 @@ const Register: React.FC = () => {
                                 </FormItem>
                             )}
                             />
-                            <Button type="submit" className='cursor-pointer'>Register</Button>
+                            <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row sm:justify-between sm:items-center">
+                                <Button type="submit" className='cursor-pointer'>Register</Button>
+                                <div className='text-sm tracking-wide'>
+                                    <span>have an account? <Link href='/login' className='text-indigo-600 hover:text-indigo-800 transition-all hover:underline'>login here</Link></span>
+                                </div>
+                            </div>
                         </form>
                     </Form>
                 </div>
