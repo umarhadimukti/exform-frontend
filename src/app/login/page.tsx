@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -28,6 +28,7 @@ const formSchema = z.object({
 });
 
 const Login: React.FC = () => {
+    // define router
     const router = useRouter();
 
     // implement form schema
@@ -66,6 +67,7 @@ const Login: React.FC = () => {
             // store item to local storage
             localStorage.setItem('access_token', data.accessToken);
 
+            // redirect to default after login page (forms)
             router.push('/forms');
 
         } catch (error) {
