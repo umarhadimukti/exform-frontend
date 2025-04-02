@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { useRouter } from 'next/compat/router'
  
 import { Button } from "@/components/ui/button"
 import {
@@ -26,6 +27,14 @@ const formSchema = z.object({
 });
 
 const Login: React.FC = () => {
+    const router = useRouter();
+
+    useEffect(() => {
+        if (router && !router.isReady) {
+            return;
+        }
+    }, [router]);
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -44,7 +53,7 @@ const Login: React.FC = () => {
         setError(null);
         try {
             // send data to server
-            const response = await fetch('localhost:3002/login', {
+            const response = await fetch('http://127.0.0.1:3002/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -53,9 +62,15 @@ const Login: React.FC = () => {
             });
 
             // get data from response
-            const data = response.json();
+            const data = await response.json();
 
-            console.log(data);
+            if (!data?.status || !response.ok) throw new Error(data.message || 'failed to login.');
+
+            localStorage.setItem('access_token', data.accessToken);
+            console.log(data)
+            console.log(localStorage.getItem('access_token'))
+
+            router?.push('/forms');
 
         } catch (error) {
             setError(error instanceof Error ? error.message : 'login error occured.');
@@ -101,13 +116,21 @@ const Login: React.FC = () => {
                             )}
                             />
                             <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row sm:justify-between sm:items-center">
-                                <Button type="submit" className='cursor-pointer'>Login</Button>
+                                <Button type="submit" className='cursor-pointer' disabled={isLoading}>
+                                    { isLoading ? 'loading..' : 'Login' }
+                                </Button>
                                 <div className='text-sm tracking-wide'>
                                     <span>don't have an account? <Link href='/register' className='text-indigo-600 hover:text-indigo-800 transition-all hover:underline'>register here</Link></span>
                                 </div>
                             </div>
+                            { error && (
+                                <div className='mt-3 text-red-600 text-sm tracking-wide'>
+                                    {error.substring(error.indexOf('invalid'))}
+                                </div>
+                            ) }
                         </form>
                     </Form>
+
                 </div>
             </main>
         </div>
