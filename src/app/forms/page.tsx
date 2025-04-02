@@ -31,7 +31,6 @@ const Forms: React.FC = () => {
                     <div className="w-[250px] bg-slate-50 rounded-md overflow-hide shadow">
                         <div className="w-full h-[250px] overflow-hidden border-b">
                             <Image src="/images/form.jpg" className='w-full h-full' alt="logo" width={100} height={100}/>
-                            
                         </div>
                         <div className="bg-white w-full h-full mt-3 p-3 py-5 leading-tight">
                             <h3 className='font-medium mb-2 truncate'>Formulir Pendataan Karyawan Pabrik</h3>

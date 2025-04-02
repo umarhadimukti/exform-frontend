@@ -8,7 +8,7 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <div className="flex items-center container justify-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="flex items-center container mx-auto justify-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col sm:flex-row justify-center gap-5 items-center w-full container mx-auto">
         <div>
           <Image src="/images/exform_logo.png" alt="logo" width={350} height={350} priority quality={100}/>

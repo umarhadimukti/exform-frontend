@@ -38,7 +38,7 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className='min-h-screen p-8 container pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]'>
+        <div className='min-h-screen p-8 container mx-auto pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]'>
             <main className="min-h-[80vh] flex justify-center items-center">
                 <div className="card flex flex-col w-[500px] min-h-[350px] p-10 pt-3 rounded-md shadow">
                     <div>
