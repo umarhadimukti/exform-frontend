@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input"
 import Image from 'next/image';
 import Link from 'next/link';
 
+// define form schema
 const formSchema = z.object({
     email: z.string().email('must be valid email address.'),
     password: z.string({
@@ -29,12 +30,14 @@ const formSchema = z.object({
 const Login: React.FC = () => {
     const router = useRouter();
 
+    // when router is not ready, just return it.
     useEffect(() => {
         if (router && !router.isReady) {
             return;
         }
     }, [router]);
 
+    // implement form schema
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -51,6 +54,7 @@ const Login: React.FC = () => {
         // set isLoading and error
         setIsLoading(true);
         setError(null);
+
         try {
             // send data to server
             const response = await fetch('http://127.0.0.1:3002/login', {
@@ -66,10 +70,10 @@ const Login: React.FC = () => {
 
             if (!data?.status || !response.ok) throw new Error(data.message || 'failed to login.');
 
+            // store item to local storage
             localStorage.setItem('access_token', data.accessToken);
-            console.log(data)
-            console.log(localStorage.getItem('access_token'))
 
+            // redirect to default page (forms) after login succes
             router?.push('/forms');
 
         } catch (error) {
@@ -117,7 +121,11 @@ const Login: React.FC = () => {
                             />
                             <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row sm:justify-between sm:items-center">
                                 <Button type="submit" className='cursor-pointer' disabled={isLoading}>
-                                    { isLoading ? 'loading..' : 'Login' }
+                                    { isLoading ? 
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width={4} className='animate-spin'>
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                                        </svg> : 'Login'
+                                    }
                                 </Button>
                                 <div className='text-sm tracking-wide'>
                                     <span>don't have an account? <Link href='/register' className='text-indigo-600 hover:text-indigo-800 transition-all hover:underline'>register here</Link></span>
