@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { useRouter } from 'next/compat/router'
+import { useRouter } from 'next/navigation'
  
 import { Button } from "@/components/ui/button"
 import {
@@ -29,13 +29,6 @@ const formSchema = z.object({
 
 const Login: React.FC = () => {
     const router = useRouter();
-
-    // when router is not ready, just return it.
-    useEffect(() => {
-        if (router && !router.isReady) {
-            return;
-        }
-    }, [router]);
 
     // implement form schema
     const form = useForm<z.infer<typeof formSchema>>({
@@ -73,8 +66,7 @@ const Login: React.FC = () => {
             // store item to local storage
             localStorage.setItem('access_token', data.accessToken);
 
-            // redirect to default page (forms) after login succes
-            router?.push('/forms');
+            router.push('/forms');
 
         } catch (error) {
             setError(error instanceof Error ? error.message : 'login error occured.');
