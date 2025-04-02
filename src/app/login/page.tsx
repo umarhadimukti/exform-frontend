@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react'
+import React, { useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -34,8 +34,35 @@ const Login: React.FC = () => {
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+    // loading state
+    const [ isLoading, setIsLoading ] = useState(false);
+    const [ error, setError ] = useState<string | null>(null);
+
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        // set isLoading and error
+        setIsLoading(true);
+        setError(null);
+        try {
+            // send data to server
+            const response = await fetch('localhost:3002/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(values),
+            });
+
+            // get data from response
+            const data = response.json();
+
+            console.log(data);
+
+        } catch (error) {
+            setError(error instanceof Error ? error.message : 'login error occured.');
+        } finally {
+            setIsLoading(false);
+        }
+
     };
 
     return (
@@ -67,7 +94,7 @@ const Login: React.FC = () => {
                                 <FormItem>
                                 <FormLabel>password</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="type your password.." {...field} />
+                                    <Input placeholder="type your password.." {...field} type='password' />
                                 </FormControl>
                                 <FormMessage />
                                 </FormItem>

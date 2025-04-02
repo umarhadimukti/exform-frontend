@@ -21,7 +21,12 @@ export default function Home() {
               className="cursor-pointer">
                 Login
             </Button>
-            <Button className="cursor-pointer" variant='outline'>Register</Button>
+            <Button
+              onClick={() => { router.push('/register') }}
+              className="cursor-pointer"
+              variant='outline'>
+                Register
+            </Button>
           </div>
         </div>
       </main>
