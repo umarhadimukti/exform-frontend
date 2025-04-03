@@ -43,13 +43,12 @@ const responseRegisterUser = async (user: User) => {
 
     const data = await response.json();
 
-    console.log(data)
-    if (!response.ok || !data.status) throw new Error(data.message || 'registration failed.');;
+    if (!response.ok || !data.status) throw new Error(data.message || 'registration failed.');
+
     return data;
 }
 
 const Register: React.FC = () => {
-
     const router = useRouter();
     const [ error, setError ] = useState<string | null>(null);
     
@@ -64,19 +63,25 @@ const Register: React.FC = () => {
         },
     });
 
+    // mutation (react query) for http post register
     const registerMutation = useMutation<ResponseRegister, Error, User>({
-        mutationFn: responseRegisterUser,
-        onSuccess: () => {
-            router.push('/forms');
+        mutationFn: responseRegisterUser, // function for fetching api. normally: (POST, PUT, DELETE)
+        onSuccess: (data) => { // callback when mutation function is successfully executed
+            if (data.accessToken) {
+                localStorage.setItem('access_token', data.accessToken);
+                router.push('/forms');
+            } else {
+                throw new Error('access token not found in response.');
+            }
         },
-        onError: (error) => {
+        onError: (error) => { // error handling when mutation function failed to execute.
             setError(error instanceof Error ? error.message: error);
         }
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-            registerMutation.mutate(values as User);
+            registerMutation.mutate(values as User); // execute mutation
         } catch (error) {
             console.error(error instanceof Error ? error.message : error);
         }
