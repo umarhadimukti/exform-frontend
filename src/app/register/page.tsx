@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input"
 import Image from 'next/image';
 import Link from 'next/link';
 
+// define validation rule for form schema
 const formSchema = z.object({
     firstname: z.string().min(3, 'firstname at least 3 characters'),
     lastname: z.string().optional(),
@@ -25,9 +26,11 @@ const formSchema = z.object({
     password: z.string({
         message: 'password is required.'
     }).min(6, 'password at least 6 characters'),
+    roleId: z.number().min(1, 'role id at least greater than equal to 1.').max(5, 'role id at least less than equal to 5.'),
 });
 
 const Register: React.FC = () => {
+    
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -35,6 +38,7 @@ const Register: React.FC = () => {
             lastname: "",
             email: "",
             password: "",
+            roleId: 3,
         },
     });
 
@@ -97,12 +101,13 @@ const Register: React.FC = () => {
                                 <FormItem>
                                 <FormLabel>password</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="type your password.." {...field} />
+                                    <Input type="password" placeholder="type your password.." {...field} />
                                 </FormControl>
                                 <FormMessage />
                                 </FormItem>
                             )}
                             />
+                            <input type="number" hidden {...form.register('roleId')} />
                             <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row sm:justify-between sm:items-center">
                                 <Button type="submit" className='cursor-pointer'>Register</Button>
                                 <div className='text-sm tracking-wide'>
