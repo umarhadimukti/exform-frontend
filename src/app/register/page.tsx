@@ -18,6 +18,8 @@ import { Input } from "@/components/ui/input"
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { ResponseRegister, User } from '@/types/registerTypes';
+
 // define validation rule for form schema
 const formSchema = z.object({
     firstname: z.string().min(3, 'firstname at least 3 characters'),
@@ -28,6 +30,17 @@ const formSchema = z.object({
     }).min(6, 'password at least 6 characters'),
     roleId: z.number().min(1, 'role id at least greater than equal to 1.').max(5, 'role id at least less than equal to 5.'),
 });
+
+// fetching data post users
+const responseRegisterUser = async (user: User): Promise<ResponseRegister> => {
+    const response = await fetch('http://localhost:3002/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user),
+    });
+
+    return response.json();
+}
 
 const Register: React.FC = () => {
     
@@ -42,8 +55,8 @@ const Register: React.FC = () => {
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        
     };
 
     return (
