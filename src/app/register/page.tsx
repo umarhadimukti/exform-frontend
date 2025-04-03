@@ -17,10 +17,10 @@ import {
 import { Input } from "@/components/ui/input"
 import Image from 'next/image'
 import Link from 'next/link'
-import { useMutation } from "@tanstack/react-query"
+// import { useMutation } from "@tanstack/react-query"
 
-import { ResponseRegister, User } from '@/types/registerTypes';
-import { useRouter } from 'next/router';
+// import { ResponseRegister, User } from '@/types/registerTypes';
+import { useRouter } from 'next/navigation';
 
 // define validation rule for form schema
 const formSchema = z.object({
@@ -34,24 +34,24 @@ const formSchema = z.object({
 });
 
 // fetching data post users
-const responseRegisterUser = async (user: User) => {
-    const response = await fetch('http://localhost:3002/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user),
-    });
+// const responseRegisterUser = async (user: User) => {
+//     const response = await fetch('http://localhost:3002/register', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify(user),
+//     });
 
-    const data = await response.json();
+//     const data = await response.json();
 
-    if (!response.ok || !data.status) throw new Error(data.message || 'registration failed.');;
+//     if (!response.ok || !data.status) throw new Error(data.message || 'registration failed.');;
 
-    return data;
-}
+//     return data;
+// }
 
 const Register: React.FC = () => {
 
-    const router = useRouter();
-    const [ error, setError ] = useState<string | null>(null);
+    // const router = useRouter();
+    // const [ error, setError ] = useState<string | null>(null);
     
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -64,26 +64,22 @@ const Register: React.FC = () => {
         },
     });
 
-    const registerMutation = useMutation<ResponseRegister, Error, User>({
-        mutationFn: responseRegisterUser,
-        onSuccess: () => {
-            if (router.isReady) {
-                router.push('/forms');
-            } else {
-                return;
-            }
-        },
-        onError: (error) => {
-            setError(error instanceof Error ? error.message: error);
-        }
-    })
+    // const registerMutation = useMutation<ResponseRegister, Error, User>({
+    //     mutationFn: responseRegisterUser,
+    //     onSuccess: () => {
+    //         router.push('/forms');
+    //     },
+    //     onError: (error) => {
+    //         setError(error instanceof Error ? error.message: error);
+    //     }
+    // })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        try {
-            registerMutation.mutate(values as User);
-        } catch (error) {
-            console.error(error instanceof Error ? error.message : error);
-        }
+        // try {
+        //     // registerMutation.mutate(values as User);
+        // } catch (error) {
+        //     console.error(error instanceof Error ? error.message : error);
+        // }
     };
 
     return (
@@ -154,6 +150,12 @@ const Register: React.FC = () => {
                                     <span>have an account? <Link href='/login' className='text-indigo-600 hover:text-indigo-800 transition-all hover:underline'>login here</Link></span>
                                 </div>
                             </div>
+
+                            {/* { error && (
+                                <div className='mt-3 text-red-600 text-sm tracking-wide'>
+                                    {error.substring(error.indexOf('invalid'))}
+                                </div>
+                            ) } */}
                         </form>
                     </Form>
                 </div>
