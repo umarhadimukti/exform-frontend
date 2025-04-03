@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react'
+import React, { useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -15,10 +15,12 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from 'next/image'
+import Link from 'next/link'
+import { useMutation } from "@tanstack/react-query"
 
 import { ResponseRegister, User } from '@/types/registerTypes';
+import { useRouter } from 'next/router';
 
 // define validation rule for form schema
 const formSchema = z.object({
@@ -32,17 +34,24 @@ const formSchema = z.object({
 });
 
 // fetching data post users
-const responseRegisterUser = async (user: User): Promise<ResponseRegister> => {
+const responseRegisterUser = async (user: User) => {
     const response = await fetch('http://localhost:3002/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user),
     });
 
-    return response.json();
+    const data = await response.json();
+
+    if (!response.ok || !data.status) throw new Error(data.message || 'registration failed.');;
+
+    return data;
 }
 
 const Register: React.FC = () => {
+
+    const router = useRouter();
+    const [ error, setError ] = useState<string | null>(null);
     
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -55,8 +64,26 @@ const Register: React.FC = () => {
         },
     });
 
+    const registerMutation = useMutation<ResponseRegister, Error, User>({
+        mutationFn: responseRegisterUser,
+        onSuccess: () => {
+            if (router.isReady) {
+                router.push('/forms');
+            } else {
+                return;
+            }
+        },
+        onError: (error) => {
+            setError(error instanceof Error ? error.message: error);
+        }
+    })
+
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        
+        try {
+            registerMutation.mutate(values as User);
+        } catch (error) {
+            console.error(error instanceof Error ? error.message : error);
+        }
     };
 
     return (
