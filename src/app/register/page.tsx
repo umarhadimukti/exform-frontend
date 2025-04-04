@@ -68,7 +68,6 @@ const Register: React.FC = () => {
         mutationFn: responseRegisterUser, // function for fetching api. normally: (POST, PUT, DELETE)
         onSuccess: (data) => { // callback when mutation function is successfully executed
             if (data.accessToken) {
-                localStorage.setItem('access_token', data.accessToken);
                 router.push('/forms');
             } else {
                 throw new Error('access token not found in response.');

@@ -57,15 +57,13 @@ const Login: React.FC = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(values),
+                credentials: 'include',
             });
 
             // get data from response
             const data = await response.json();
 
             if (!data?.status || !response.ok) throw new Error(data.message || 'failed to login.');
-
-            // store item to local storage
-            localStorage.setItem('access_token', data.accessToken);
 
             // redirect to default after login page (forms)
             router.push('/forms');
