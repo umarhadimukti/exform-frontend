@@ -26,8 +26,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
     
                 setLoading(false);
             } catch (error) {
+                const errorMessage: string = error instanceof Error ? error.message : String(error);
                 setLoading(false);
-                throw new Error(`authentication check failed: ${error instanceof Error ? error.message : error}`);
+                throw new Error(`authentication check failed: ${errorMessage}`);
             }
         }
 
