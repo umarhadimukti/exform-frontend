@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
                 setLoading(false);
             } catch (error) {
                 const errorMessage: string = error instanceof Error ? error.message : String(error);
+                console.error(errorMessage);
                 setLoading(false);
                 throw new Error(`authentication check failed: ${errorMessage}`);
             }
@@ -56,7 +57,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
                 throw new Error(data.message);
             }
         } catch (error) {
-            console.error('logout failed:', error instanceof Error ? error.message : String(error));
+            const errorMessage: string = error instanceof Error ? error.message : String(error);
+            console.error(`failed to logout: ${errorMessage}`);
+            throw new Error(`failed to logout: ${errorMessage}`);
         }
     };
 
