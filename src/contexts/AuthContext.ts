@@ -18,6 +18,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
         const checkUserLoggedIn = async () => {
             try {
                 const response = await fetch('http://localhost:3002/api/v1/current-user');
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setUser(data);
+                }
     
                 setLoading(false);
             } catch (error) {
@@ -26,6 +31,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
             }
         }
 
+        checkUserLoggedIn();
     }, [])
+
+
 
 }
