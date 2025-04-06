@@ -35,7 +35,7 @@ const formSchema = z.object({
 
 // fetching data post users
 const responseRegisterUser = async (user: User) => {
-    const response = await fetch('http://localhost:3002/register', {
+    const response = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user),
@@ -68,11 +68,7 @@ const Register: React.FC = () => {
     const registerMutation = useMutation<ResponseRegister, Error, User>({
         mutationFn: responseRegisterUser, // function for fetching api. normally: (POST, PUT, DELETE)
         onSuccess: (data) => { // callback when mutation function is successfully executed
-            if (data.accessToken) {
-                router.push('/forms');
-            } else {
-                throw new Error('access token not found in response.');
-            }
+            router.push('/forms')
         },
         onError: (error) => { // error handling when mutation function failed to execute.
             setError(error instanceof Error ? error.message: error);

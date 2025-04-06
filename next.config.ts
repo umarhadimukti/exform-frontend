@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
         source: '/api/:path*',
         destination: 'http://localhost:3002/:path*', // proxy to express
       },
+      {
+        source: '/api/v1/:path*',
+        destination: 'http://localhost:3002/api/v1/:path*', // proxy to express
+      },
     ];
   },
 };
