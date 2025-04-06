@@ -1,3 +1,5 @@
+"use client";
+
 import { createContext, useContext, useState, useEffect } from "react";
 import { User, AuthContextType } from "@/types/authContextTypes";
 import { useRouter } from "next/navigation";
@@ -17,10 +19,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
 
         const checkUserLoggedIn = async () => {
             try {
-                const response = await fetch('http://localhost:3002/api/v1/current-user');
+                const response = await fetch('http://localhost:3002/api/v1/current-user', {
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                });
 
                 if (response.ok) {
                     const data = await response.json();
+                    console.log(data)
                     setUser(data);
                 }
     
@@ -42,7 +48,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
                 method: 'POST',
                 credentials: 'include',
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
     

@@ -1,8 +1,13 @@
+"use client";
+
 import Image from 'next/image'
 import React from 'react'
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarImage } from "@/components/ui/avatar"
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
+import { useAuth } from '@/contexts/AuthContext'
 
 const Header = () => {
+  const { user, logout } = useAuth();
   return (
     <div className='w-full bg-white'>
 
@@ -16,10 +21,19 @@ const Header = () => {
                 </div>
             </div>
             <div>
-                <Avatar className='w-10 h-10'>
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>Profile</AvatarFallback>
-                </Avatar>
+            <Popover>
+                <PopoverTrigger>
+                    <Avatar className='w-8 h-8 cursor-pointer transition-all duration-500 hover:scale-105 hover:brightness-90'>
+                        <AvatarImage src="/images/user.png" />
+                    </Avatar>
+                </PopoverTrigger>
+                <PopoverContent>
+                    <div className="border border-black flex flex-col gap-1">
+                        <h6>{ user?.fullName }</h6>
+                    </div>
+                </PopoverContent>
+            </Popover>
+                
             </div>
         </div>
 

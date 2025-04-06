@@ -1,16 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export function middleware (request: NextRequest)
-{
+export function middleware(request: NextRequest) {
     const { cookies } = request;
-    const accessToken = cookies.get('accessToken');
+    const accessToken = cookies.get('accessToken')?.value;
 
-    // if there's no token available and trying to access protected page
-    if (!accessToken && request.nextUrl.pathname.startsWith('/login')) {
-        return NextResponse.redirect(new URL('/login', request.url));
-    }
-
-    return NextResponse.next();
+    if(!accessToken) {
+        return NextResponse.redirect(new URL('/login',request.url))
+     }
+     else {
+      return NextResponse.redirect(new URL('/', request.url))
+     }
 }
 
 export const config = {
