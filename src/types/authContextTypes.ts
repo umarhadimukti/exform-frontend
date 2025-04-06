@@ -21,4 +21,5 @@ export interface AuthContextType
     logout: () => Promise<boolean>;
     error: string | null;
     clearError: () => void;
+    loading: boolean;
 }
