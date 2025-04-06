@@ -12,7 +12,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
 {
     // define state
     const [ user, setUser ] = useState<User | null>(null);
-    const [ loading, setLoading ] = useState<boolean>(false);
+    const [ loading, setLoading ] = useState<boolean>(true);
+    const [ error, setError ] = useState<string | null>(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -26,25 +27,31 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
 
                 if (response.ok) {
                     const data = await response.json();
+                    console.log('masuk')
                     console.log(data)
                     setUser(data);
+                } else {
+                    if (response.status === 401) {
+                        console.error('user not authenticated');
+                    } else {
+                        setError('authentication check failed: ' + response.status);
+                    }
                 }
-    
-                setLoading(false);
             } catch (error) {
                 const errorMessage: string = error instanceof Error ? error.message : String(error);
                 console.error(errorMessage);
+                setError(`authentication check failed: ${errorMessage}`);
+            } finally {
                 setLoading(false);
-                throw new Error(`authentication check failed: ${errorMessage}`);
             }
         }
 
         checkUserLoggedIn();
     }, [])
 
-    const logout = async (): Promise<void> => {
+    const logout = async (): Promise<boolean> => {
         try {
-            const response = await fetch('/api/logout', {
+            const response = await fetch('http://localhost:3002/logout', {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -59,18 +66,29 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
                 setUser(null);
                 // redirect to login page
                 router.push('/login');
+                return true;
             } else {
-                throw new Error(data.message);
+                setError(data.message || 'logout failed');
+                return false;
             }
         } catch (error) {
             const errorMessage: string = error instanceof Error ? error.message : String(error);
             console.error(`failed to logout: ${errorMessage}`);
-            throw new Error(`failed to logout: ${errorMessage}`);
+            setError(`failed to logout: ${errorMessage}`);
+            return false;
+        } finally {
+            setLoading(false);
         }
     };
 
+    const clearError = () => setError(null);
+
+    const authValues: AuthContextType = {
+        user, setUser, loading, logout, error, clearError,
+    }
+
     return (
-        <AuthContext.Provider value={{ user, setUser, logout, loading }}>
+        <AuthContext.Provider value={ authValues }>
           {children}
         </AuthContext.Provider>
     );

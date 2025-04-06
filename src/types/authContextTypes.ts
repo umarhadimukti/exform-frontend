@@ -11,6 +11,8 @@ export interface AuthContextType
 {
     user: User | null;
     setUser: (user: User | null) => void;
-    logout: () => Promise<void>;
+    logout: () => Promise<boolean>;
     loading: boolean;
-  }
+    error: string | null;
+    clearError: () => void;
+}

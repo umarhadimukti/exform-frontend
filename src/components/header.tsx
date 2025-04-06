@@ -4,10 +4,8 @@ import Image from 'next/image'
 import React from 'react'
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
-import { useAuth } from '@/contexts/AuthContext'
 
 const Header = () => {
-  const { user, logout } = useAuth();
   return (
     <div className='w-full bg-white'>
 
@@ -28,9 +26,6 @@ const Header = () => {
                     </Avatar>
                 </PopoverTrigger>
                 <PopoverContent>
-                    <div className="border border-black flex flex-col gap-1">
-                        <h6>{ user?.fullName }</h6>
-                    </div>
                 </PopoverContent>
             </Popover>
                 
