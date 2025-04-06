@@ -1,10 +1,17 @@
-export interface User
+interface Role
 {
-    firstName: string;
-    lastName: string | null;
-    fullName: string;
+    role: {
+        id: number,
+        name: string,
+    }
+}
+
+export interface User extends Role
+{
+    first_name: string;
+    last_name: string | null;
     email: string;
-    roleId: number;
+    role_id: number;
 }
 
 export interface AuthContextType

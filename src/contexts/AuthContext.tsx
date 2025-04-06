@@ -3,7 +3,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { User, AuthContextType } from "@/types/authContextTypes";
 import { redirect, useRouter } from "next/navigation";
-import Cookies from "js-cookie";
 
 // create AuthContext
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -14,40 +13,46 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
     // define state
     const [ user, setUser ] = useState<User | null>(null);
     const [ error, setError ] = useState<string | null>(null);
+    const [ loading, setLoading ] = useState<boolean>(true);
     const router = useRouter();
 
     useEffect(() => {
         const fetchUser = async (): Promise<void> => {
-            const response = await fetch('/source/v1/current-user', {
-                credentials: 'include'
-            });
-
-            const data = await response.json();
-            console.log(data)
-
-            if (data.status) {
-                setUser(data.user);
+            try {
+                setLoading(true);
+                const response = await fetch('/source/v1/current-user', {
+                    credentials: 'include'
+                });
+    
+                const data = await response.json();
+                
+                if (data.status === true) {
+                    setUser(data.userInformation);
+                }
+            } catch (error) {
+                const errorMessage: string = `failed to fetch current user: ${error instanceof Error ? error.message : error as string}`;
+                setError(errorMessage);
+            } finally {
+                setLoading(false);
             }
+            
         };
 
         fetchUser();
-
-        console.log(user)
     }, []);
-    
 
     const logout = async (): Promise<boolean> => {
         try {
+            setLoading(true);
             const response = await fetch ('/api/logout', {
                 method: 'POST',
                 credentials: 'include',
-                headers: { 'Authorization': 'Bearer' }
             });
 
             const resJson = await response.json();
 
             if (resJson.status) {
-                console.log(resJson)
+                setUser(null);
                 router.push('/login');
             }
 
@@ -56,6 +61,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
             const errorMessage: string = error instanceof Error ? error.message : error as string;
             setError(errorMessage);
             return false;
+        } finally {
+            setLoading(false);
         }
     };
 
