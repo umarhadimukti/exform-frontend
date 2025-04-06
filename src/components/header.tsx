@@ -6,7 +6,6 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import LogoutButton from './button/logout-button';
 import { useAuth } from '@/contexts/AuthContext';
-import { User } from '@/types/authContextTypes';
 
 const Header = () => {
   const { user } = useAuth();
