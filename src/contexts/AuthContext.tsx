@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 import { User, AuthContextType } from "@/types/authContextTypes";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
 // get cookies
@@ -18,96 +18,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
 {
     // define state
     const [ user, setUser ] = useState<User | null>(null);
-    const [ loading, setLoading ] = useState<boolean>(true);
     const [ error, setError ] = useState<string | null>(null);
-    const [ token, setToken ] = useState<string | null>(null);
     const router = useRouter();
-
-    useEffect(() => {
-        const token = getTokenFromCookies();
-        setToken(token || null);
-    }, [])
-
-    useEffect(() => {
-
-        const checkUserLoggedIn = async () => {
-            try {
-                const response = await fetch('http://localhost:3002/api/v1/current-user', {
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token !== null ? token : ''}`,
-                    },
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('masuk')
-                    console.log(data)
-                    setUser(data);
-                } else {
-                    if (response.status === 401) {
-                        Cookies.remove('accessToken');
-                        console.error('user not authenticated');
-                    } else {
-                        setError('authentication check failed: ' + response.status);
-                    }
-                }
-            } catch (error) {
-                const errorMessage: string = error instanceof Error ? error.message : String(error);
-                console.error(errorMessage);
-                setError(`authentication check failed: ${errorMessage}`);
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        checkUserLoggedIn();
-    }, [token])
 
     const logout = async (): Promise<boolean> => {
         try {
-            const response = await fetch('http://localhost:3002/logout', {
+            const response = await fetch ('/api/logout', {
                 method: 'POST',
                 credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token !== null ? token : ''}`,
-                }
             });
-    
-            const data = await response.json();
-        
-            if (data.status) {
-                // clear user state
-                setUser(null);
-                setToken(null);
-                Cookies.remove('accessToken');
-                // redirect to login page
-                router.push('/login');
-                return true;
-            } else {
-                setError(data.message || 'logout failed');
-                return false;
-            }
-        } catch (error) {
-            const errorMessage: string = error instanceof Error ? error.message : String(error);
-            console.error(`failed to logout: ${errorMessage}`);
-            setError(`failed to logout: ${errorMessage}`);
 
-            setUser(null);
-            setToken(null);
-            Cookies.remove('accessToken');
+            if (response.status) {
+                router.push('/login');
+            }
+
+            return true;
+        } catch (error) {
+            const errorMessage: string = error instanceof Error ? error.message : error as string;
+            setError(errorMessage);
             return false;
-        } finally {
-            setLoading(false);
         }
     };
 
     const clearError = () => setError(null);
 
     const authValues: AuthContextType = {
-        user, setUser, loading, logout, error, clearError, token,
+        user, setUser, logout, error, clearError,
     }
 
     return (

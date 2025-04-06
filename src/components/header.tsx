@@ -4,6 +4,7 @@ import Image from 'next/image'
 import React from 'react'
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
+import LogoutButton from './button/logout-button';
 
 const Header = () => {
   return (
@@ -26,6 +27,9 @@ const Header = () => {
                     </Avatar>
                 </PopoverTrigger>
                 <PopoverContent>
+                    <div>
+                        <LogoutButton/>
+                    </div>
                 </PopoverContent>
             </Popover>
                 
