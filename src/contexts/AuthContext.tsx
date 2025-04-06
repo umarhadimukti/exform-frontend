@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
     const [ user, setUser ] = useState<User | null>(null);
     const [ error, setError ] = useState<string | null>(null);
     const [ loading, setLoading ] = useState<boolean>(true);
+    const [ initialized, setInitialized ] = useState<boolean>(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -26,19 +27,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
     
                 const data = await response.json();
                 
-                if (data.status === true) {
+                if (data.status && data.userInformation) {
                     setUser(data.userInformation);
+                } else {
+                    setUser(null);
                 }
             } catch (error) {
                 const errorMessage: string = `failed to fetch current user: ${error instanceof Error ? error.message : error as string}`;
                 setError(errorMessage);
+                setUser(null);
             } finally {
                 setLoading(false);
+                setInitialized(true);
             }
             
         };
 
         fetchUser();
+
     }, []);
 
     const logout = async (): Promise<boolean> => {
@@ -69,7 +75,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
     const clearError = () => setError(null);
 
     const authValues: AuthContextType = {
-        user, setUser, logout, error, clearError, loading
+        user, setUser, logout, error, clearError, loading, initialized
     }
 
     return (

@@ -8,8 +8,8 @@ import LogoutButton from './button/logout-button';
 import { useAuth } from '@/contexts/AuthContext';
 
 const Header = () => {
-  const { user } = useAuth();
-  const fullName: string = `${user?.first_name} ${user?.last_name}`.trim();
+  const { user, loading } = useAuth();
+  const fullName: string = !loading && user ? (`${user?.first_name} ${user?.last_name}`.trim()) : '';
 
   return (
     <div className='w-full bg-white'>
@@ -32,10 +32,14 @@ const Header = () => {
                 </PopoverTrigger>
                 <PopoverContent>
                     <div className='flex flex-col gap-4'>
-                        <div>
-                            <h5 className='text-sm tracking-wide font-medium text-gray-800'>{ fullName ?? '' }</h5>
-                            <h5 className='text-xs tracking-wide text-gray-700'>{ user?.email ?? '' }</h5>
-                        </div>
+                        { loading ?
+                            <div className='text-xs tracking-wide animate-pulse text-gray-800'>loading user..</div>
+                            :
+                            <div>
+                                <h5 className='text-sm tracking-wide font-medium text-gray-800'>{ fullName }</h5>
+                                <h5 className='text-xs tracking-wide text-gray-700'>{ user?.email || '' }</h5>
+                            </div>
+                        }
                         <LogoutButton />
                     </div>
                 </PopoverContent>

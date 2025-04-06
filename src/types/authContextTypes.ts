@@ -22,4 +22,5 @@ export interface AuthContextType
     error: string | null;
     clearError: () => void;
     loading: boolean;
+    initialized: boolean;
 }
