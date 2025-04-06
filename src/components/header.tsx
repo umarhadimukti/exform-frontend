@@ -5,8 +5,13 @@ import React from 'react'
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import LogoutButton from './button/logout-button';
+import { useAuth } from '@/contexts/AuthContext';
+import { User } from '@/types/authContextTypes';
 
 const Header = () => {
+  const { user } = useAuth();
+  const fullName: string = `${user?.first_name} ${user?.last_name}`.trim();
+
   return (
     <div className='w-full bg-white'>
 
@@ -27,8 +32,12 @@ const Header = () => {
                     </Avatar>
                 </PopoverTrigger>
                 <PopoverContent>
-                    <div>
-                        <LogoutButton/>
+                    <div className='flex flex-col gap-4'>
+                        <div>
+                            <h5 className='text-sm tracking-wide font-medium text-gray-800'>{ fullName ?? '' }</h5>
+                            <h5 className='text-xs tracking-wide text-gray-700'>{ user?.email ?? '' }</h5>
+                        </div>
+                        <LogoutButton />
                     </div>
                 </PopoverContent>
             </Popover>
