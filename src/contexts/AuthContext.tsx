@@ -3,6 +3,12 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { User, AuthContextType } from "@/types/authContextTypes";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+
+// get cookies
+const getTokenFromCookies = (): string | undefined => {
+    return Cookies.get('accessToken');
+}
 
 // create AuthContext
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -14,7 +20,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
     const [ user, setUser ] = useState<User | null>(null);
     const [ loading, setLoading ] = useState<boolean>(true);
     const [ error, setError ] = useState<string | null>(null);
+    const [ token, setToken ] = useState<string | null>(null);
     const router = useRouter();
+
+    useEffect(() => {
+        const token = getTokenFromCookies();
+        setToken(token || null);
+    }, [])
 
     useEffect(() => {
 
@@ -22,7 +34,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
             try {
                 const response = await fetch('http://localhost:3002/api/v1/current-user', {
                     credentials: 'include',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token !== null ? token : ''}`,
+                    },
                 });
 
                 if (response.ok) {
@@ -32,6 +47,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
                     setUser(data);
                 } else {
                     if (response.status === 401) {
+                        Cookies.remove('accessToken');
                         console.error('user not authenticated');
                     } else {
                         setError('authentication check failed: ' + response.status);
@@ -47,7 +63,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
         }
 
         checkUserLoggedIn();
-    }, [])
+    }, [token])
 
     const logout = async (): Promise<boolean> => {
         try {
@@ -55,7 +71,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
                 method: 'POST',
                 credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token !== null ? token : ''}`,
                 }
             });
     
@@ -64,6 +81,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
             if (data.status) {
                 // clear user state
                 setUser(null);
+                setToken(null);
+                Cookies.remove('accessToken');
                 // redirect to login page
                 router.push('/login');
                 return true;
@@ -75,6 +94,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
             const errorMessage: string = error instanceof Error ? error.message : String(error);
             console.error(`failed to logout: ${errorMessage}`);
             setError(`failed to logout: ${errorMessage}`);
+
+            setUser(null);
+            setToken(null);
+            Cookies.remove('accessToken');
             return false;
         } finally {
             setLoading(false);
@@ -84,7 +107,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
     const clearError = () => setError(null);
 
     const authValues: AuthContextType = {
-        user, setUser, loading, logout, error, clearError,
+        user, setUser, loading, logout, error, clearError, token,
     }
 
     return (

@@ -15,4 +15,5 @@ export interface AuthContextType
     loading: boolean;
     error: string | null;
     clearError: () => void;
+    token: string | null;
 }
