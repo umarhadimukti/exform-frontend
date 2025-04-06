@@ -2,12 +2,8 @@ import React from 'react'
 import Image from 'next/image'
 import { MdOutlinePostAdd } from "react-icons/md"
 import Header from '@/components/header'
-import Cookies from 'js-cookie'
-import { redirect } from 'next/navigation'
 
 const Forms: React.FC = async () => {
-  const accessToken = Cookies.get('accessToken');
-  console.log(accessToken)
 
   return (
     <div className='min-h-[100vh] w-full font-[family-name:var(--font-geist-sans)]'>

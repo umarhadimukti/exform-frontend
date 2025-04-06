@@ -5,11 +5,6 @@ import { User, AuthContextType } from "@/types/authContextTypes";
 import { redirect, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
-// get cookies
-const getTokenFromCookies = (): string | undefined => {
-    return Cookies.get('accessToken');
-}
-
 // create AuthContext
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -21,14 +16,38 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) =>
     const [ error, setError ] = useState<string | null>(null);
     const router = useRouter();
 
+    useEffect(() => {
+        const fetchUser = async (): Promise<void> => {
+            const response = await fetch('/source/v1/current-user', {
+                credentials: 'include'
+            });
+
+            const data = await response.json();
+            console.log(data)
+
+            if (data.status) {
+                setUser(data.user);
+            }
+        };
+
+        fetchUser();
+
+        console.log(user)
+    }, []);
+    
+
     const logout = async (): Promise<boolean> => {
         try {
             const response = await fetch ('/api/logout', {
                 method: 'POST',
                 credentials: 'include',
+                headers: { 'Authorization': 'Bearer' }
             });
 
-            if (response.status) {
+            const resJson = await response.json();
+
+            if (resJson.status) {
+                console.log(resJson)
                 router.push('/login');
             }
 
