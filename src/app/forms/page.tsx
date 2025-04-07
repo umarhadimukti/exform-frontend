@@ -1,9 +1,29 @@
+"use client";
+
 import React from 'react'
 import Image from 'next/image'
 import { MdOutlinePostAdd } from "react-icons/md"
+import { useEffect } from 'react'
 import Header from '@/components/header'
 
-const Forms: React.FC = async () => {
+const Forms: React.FC = () => {
+
+  useEffect(() => {
+
+    const fetchFormsData = async () => {
+        const response = await fetch('/source/v1/forms', {
+            method: 'GET',
+            credentials: 'include',
+        });
+
+        const forms = await response.json();
+
+        console.log(forms);
+    }
+
+    fetchFormsData();
+
+  }, []);
 
   return (
     <div className='min-h-[100vh] w-full font-[family-name:var(--font-geist-sans)]'>
