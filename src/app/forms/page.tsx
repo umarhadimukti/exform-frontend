@@ -47,7 +47,6 @@ const Forms: React.FC = () => {
     setCurrentPage(page);
   }
 
-
   return (
     <div className='min-h-[100vh] border border-red-700 w-full font-[family-name:var(--font-geist-sans)]'>
         <header>
@@ -71,9 +70,9 @@ const Forms: React.FC = () => {
             </div>
 
             <div className="h-full">
-                <div className="wrapper grid grid-cols-10 max-w-8/10 mx-auto items-start w-full space-x-3 mt-5">
+                <div className="wrapper grid grid-cols-10 max-w-8/10 mx-auto items-start w-full space-x-3 space-y-4 mt-5">
                     {forms?.data.map((form: Form, index: number) => (
-                        <div key={`${index}-${form?.id}`} className="col-span-2 bg-slate-50 overflow-hide border max-h-max">
+                        <div key={`${index}-${form?.id}`} className="col-span-2 bg-slate-50 overflow-hide border max-h-max hover:border-indigo-800 transition-all duration-200 cursor-pointer">
                             <div className="relative w-full h-[200px] border-b">
                                 <Image
                                     src='/images/form.jpg'
@@ -89,6 +88,10 @@ const Forms: React.FC = () => {
                             </div>
                         </div>
                     ))}
+                </div>
+
+                <div>
+
                 </div>
             </div>
         </main>
