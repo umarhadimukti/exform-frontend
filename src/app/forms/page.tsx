@@ -1,11 +1,11 @@
 "use client";
 
 import React from 'react'
-import Image from 'next/image'
 import { MdOutlinePostAdd } from "react-icons/md"
 import { useEffect, useState } from 'react'
 import Header from '@/components/header'
 import { Form, FormsResponse } from '../../types/formsTypes';
+import RandomImage from '../../components/image/randomImage';
 
 const Forms: React.FC = () => {
   const [ forms, setForms ] = useState<FormsResponse | null>(null);
@@ -75,11 +75,7 @@ const Forms: React.FC = () => {
                     {forms?.data.map((form: Form, index: number) => (
                         <div key={`${index}-${form?.id}`} className="col-span-2 bg-slate-50 overflow-hide border max-h-max">
                             <div className="relative w-[200px] h-[300px] border-b">
-                                <Image
-                                    src={`https://source.unsplash.com/random?timestamp=${new Date().getTime()}}`} className='object-cover rounded'
-                                    alt="logo"
-                                    priority
-                                    fill/>
+                                <RandomImage query='paper background'/>
                             </div>
                             <div className="bg-white w-full h-full mt-3 p-3 py-5 leading-tight">
                                 <h3 className='font-medium mb-2 truncate'>{ form.title ?? '' }</h3>
