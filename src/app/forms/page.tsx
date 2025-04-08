@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { MdOutlinePostAdd } from "react-icons/md"
 import { useEffect, useState } from 'react'
 import Header from '@/components/header'
-import { FormsResponse } from '../../types/formsTypes';
+import { Form, FormsResponse } from '../../types/formsTypes';
 
 const Forms: React.FC = () => {
   const [ forms, setForms ] = useState<FormsResponse | null>(null);
@@ -71,7 +71,7 @@ const Forms: React.FC = () => {
 
             <div className="h-full">
                 <div className="wrapper flex justify-start container mx-auto items-center w-full gap-4 mt-5">
-                    {forms?.data.map((form: any, index) => (
+                    {forms?.data.map((form: Form, index: number) => (
                         <div key={`${index}-${form?.id}`} className="w-[250px] bg-slate-50 rounded-md overflow-hide shadow">
                             <div className="w-full h-[250px] overflow-hidden border-b">
                                 <Image src="/images/form.jpg" className='w-full h-full' alt="logo" width={100} height={100}/>
