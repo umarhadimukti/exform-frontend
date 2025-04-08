@@ -5,7 +5,7 @@ import { MdOutlinePostAdd } from "react-icons/md"
 import { useEffect, useState } from 'react'
 import Header from '@/components/header'
 import { Form, FormsResponse } from '../../types/formsTypes';
-import RandomImage from '../../components/image/randomImage';
+import Image from 'next/image';
 
 const Forms: React.FC = () => {
   const [ forms, setForms ] = useState<FormsResponse | null>(null);
@@ -75,7 +75,13 @@ const Forms: React.FC = () => {
                     {forms?.data.map((form: Form, index: number) => (
                         <div key={`${index}-${form?.id}`} className="col-span-2 bg-slate-50 overflow-hide border max-h-max">
                             <div className="relative w-full h-[200px] border-b">
-                                <RandomImage query='book' index={index} />
+                                <Image
+                                    src='/images/form.jpg'
+                                    alt='image'
+                                    fill
+                                    priority
+                                    className='object-cover'
+                                />
                             </div>
                             <div className="bg-white w-full h-full mt-3 p-3 py-5 leading-tight">
                                 <h3 className='font-medium mb-2 truncate'>{ form.title ?? '' }</h3>
