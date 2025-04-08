@@ -48,7 +48,7 @@ const Forms: React.FC = () => {
   }
 
   return (
-    <div className='min-h-[100vh] border border-red-700 w-full font-[family-name:var(--font-geist-sans)]'>
+    <div className='min-h-[100vh] w-full font-[family-name:var(--font-geist-sans)]'>
         <header>
             <Header/>
         </header>
