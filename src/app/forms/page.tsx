@@ -47,6 +47,7 @@ const Forms: React.FC = () => {
     setCurrentPage(page);
   }
 
+
   return (
     <div className='min-h-[100vh] border border-red-700 w-full font-[family-name:var(--font-geist-sans)]'>
         <header>
