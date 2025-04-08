@@ -13,11 +13,7 @@ const nextConfig: NextConfig = {
         destination: 'http://localhost:3002/api/v1/:path*', // proxy to express
       },
     ];
-  },
-
-  images: {
-    domains: [ 'source.unsplash.com' ],
-  },
+  }
 };
 
 export default nextConfig;
