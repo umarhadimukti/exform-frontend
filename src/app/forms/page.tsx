@@ -63,22 +63,26 @@ const Forms: React.FC = () => {
                 </div>
             </div>
 
-            <div className="mt-5 mb-6 max-w-8/10 mx-auto">
+            <div className="mt-5 mb-3 max-w-8/10 mx-auto">
                 <div className='flex justify-between items-center'>
                     <h5 className='tracking-wide text-gray-900'>Latest Form</h5>
                 </div>
             </div>
 
-            <div className="h-full border border-black">
+            <div className="h-full">
                 <div className="wrapper grid grid-cols-10 max-w-8/10 mx-auto items-start w-full space-x-3 mt-5">
                     {forms?.data.map((form: Form, index: number) => (
-                        <div key={`${index}-${form?.id}`} className="col-span-2 bg-slate-50 rounded-md overflow-hide shadow max-h-max">
-                            <div className="w-full h-[250px] overflow-hidden border-b">
-                                <Image src="/images/form.jpg" className='w-full h-full' alt="logo" width={100} height={100} priority/>
+                        <div key={`${index}-${form?.id}`} className="col-span-2 bg-slate-50 overflow-hide border max-h-max">
+                            <div className="relative w-[200px] h-[300px] border-b">
+                                <Image
+                                    src={`https://source.unsplash.com/random/200x300?sig=${form.id}`} className='object-cover rounded'
+                                    alt="logo"
+                                    priority
+                                    fill/>
                             </div>
                             <div className="bg-white w-full h-full mt-3 p-3 py-5 leading-tight">
                                 <h3 className='font-medium mb-2 truncate'>{ form.title ?? '' }</h3>
-                                <p className='text-sm text-gray-600 truncate'>{ form.description ?? '' }</p>
+                                <p className='text-sm text-gray-600 truncate'>{ form.description ?? 'empty description' }</p>
                             </div>
                         </div>
                     ))}
