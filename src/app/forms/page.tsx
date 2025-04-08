@@ -74,8 +74,8 @@ const Forms: React.FC = () => {
                 <div className="wrapper grid grid-cols-10 max-w-8/10 mx-auto items-start w-full space-x-3 mt-5">
                     {forms?.data.map((form: Form, index: number) => (
                         <div key={`${index}-${form?.id}`} className="col-span-2 bg-slate-50 overflow-hide border max-h-max">
-                            <div className="relative w-[200px] h-[300px] border-b">
-                                <RandomImage query='paper background'/>
+                            <div className="relative w-full h-[200px] border-b">
+                                <RandomImage query='book' index={index} />
                             </div>
                             <div className="bg-white w-full h-full mt-3 p-3 py-5 leading-tight">
                                 <h3 className='font-medium mb-2 truncate'>{ form.title ?? '' }</h3>

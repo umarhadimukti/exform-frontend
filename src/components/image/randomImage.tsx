@@ -6,9 +6,9 @@ import useSWR from 'swr';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json())
 
-const RandomImage = ({ query = 'book' }: { query?: string }) => {
+const RandomImage = ({ query, index }: { query?: string, index?: number }) => {
 
-  const { data, error, isLoading } = useSWR(`/api/unsplash/random?query=${query}`, fetcher);
+  const { data, error, isLoading } = useSWR(`/api/unsplash/random?query=${query}&seed=${index}`, fetcher);
 
   if (error) return <div className='text-xs text-gray-800 tracking-wide animate-pulse'>failed to fetch image</div>
 
@@ -21,7 +21,7 @@ const RandomImage = ({ query = 'book' }: { query?: string }) => {
           alt="image"
           fill
           priority
-          className="rounded object-cover"
+          className="object-cover"
         />
     </>
   )
