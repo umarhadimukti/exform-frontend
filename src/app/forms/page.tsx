@@ -28,6 +28,7 @@ const Forms: React.FC = () => {
             if (!response.ok) throw new Error('error while fetching forms data.');
 
             const forms = await response.json();
+            console.log(forms)
     
             setForms(forms);
         } catch (error) {
@@ -91,8 +92,27 @@ const Forms: React.FC = () => {
                         ))}
                     </div>
 
-                    <div className='mt-3 w-full border py-2'>
-
+                    <div className='mt-3 w-full py-2'>
+                        {forms?.hasPrevPage && forms?.hasNextPage && (
+                            <div className='flex justify-between items-center'>
+                                <button onClick={() => handlePageChange(currentPage-1)} className='py-2 px-3 cursor-pointer hover:bg-gray-100 rounded-sm border text-xs font-medium'>previous</button>
+                                <button onClick={() => handlePageChange(currentPage+1)} className='py-2 px-3 cursor-pointer hover:bg-gray-100 rounded-sm border text-xs font-medium'>next</button>
+                            </div>
+                        )}
+                        {forms?.hasPrevPage && forms?.hasNextPage || (
+                            <div>
+                                <div className="flex justify-start items-center">
+                                    {forms?.hasPrevPage && (
+                                        <button onClick={() => handlePageChange(currentPage-1)} className='py-2 px-3 cursor-pointer hover:bg-gray-100 rounded-sm border text-xs font-medium'>previous</button>
+                                    )}
+                                </div>
+                                <div className="flex justify-end items-center">
+                                    {forms?.hasNextPage && (
+                                        <button onClick={() => handlePageChange(currentPage+1)} className='py-2 px-3 cursor-pointer hover:bg-gray-100 rounded-sm border text-xs font-medium'>next</button>
+                                    )}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
