@@ -63,37 +63,40 @@ const Forms: React.FC = () => {
                 </div>
             </div>
 
-            <div className="mt-5 mb-3 max-w-8/10 mx-auto">
-                <div className='flex justify-between items-center'>
-                    <h5 className='tracking-wide text-gray-900'>Latest Form</h5>
+            <div className="max-w-8/10 mx-auto">
+                <div className="mt-5 mb-3">
+                    <div className='flex justify-between items-center'>
+                        <h5 className='tracking-wide text-gray-900'>Latest Form</h5>
+                    </div>
+                </div>
+
+                <div className="h-full">
+                    <div className="wrapper grid grid-cols-10 items-start w-full space-x-3 space-y-4 mt-5">
+                        {forms?.data.map((form: Form, index: number) => (
+                            <div key={`${index}-${form?.id}`} className="col-span-2 bg-slate-50 overflow-hide border max-h-max hover:border-gray-400 transition-all duration-200 cursor-pointer">
+                                <div className="relative w-full h-[200px] border-b">
+                                    <Image
+                                        src='/images/form.jpg'
+                                        alt='image'
+                                        fill
+                                        priority
+                                        className='object-cover'
+                                    />
+                                </div>
+                                <div className="bg-white w-full h-full mt-3 p-3 py-5 leading-tight">
+                                    <h3 className='font-medium mb-2 truncate'>{ form.title ?? '' }</h3>
+                                    <p className='text-sm text-gray-600 truncate'>{ form.description ?? 'empty description' }</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className='mt-3 w-full border py-2'>
+
+                    </div>
                 </div>
             </div>
 
-            <div className="h-full">
-                <div className="wrapper grid grid-cols-10 max-w-8/10 mx-auto items-start w-full space-x-3 space-y-4 mt-5">
-                    {forms?.data.map((form: Form, index: number) => (
-                        <div key={`${index}-${form?.id}`} className="col-span-2 bg-slate-50 overflow-hide border max-h-max hover:border-indigo-800 transition-all duration-200 cursor-pointer">
-                            <div className="relative w-full h-[200px] border-b">
-                                <Image
-                                    src='/images/form.jpg'
-                                    alt='image'
-                                    fill
-                                    priority
-                                    className='object-cover'
-                                />
-                            </div>
-                            <div className="bg-white w-full h-full mt-3 p-3 py-5 leading-tight">
-                                <h3 className='font-medium mb-2 truncate'>{ form.title ?? '' }</h3>
-                                <p className='text-sm text-gray-600 truncate'>{ form.description ?? 'empty description' }</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-                <div>
-
-                </div>
-            </div>
         </main>
     </div>
   )
