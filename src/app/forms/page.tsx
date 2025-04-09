@@ -121,6 +121,7 @@ const Forms: React.FC = () => {
                             </div>
                             <div className='col-span-7 border flex justify-end'>
                                 <button
+                                    onClick={() => handlePageChange(currentPage - 1)}
                                     className={`text-gray-800 hover:text-gray-900 hover:bg-gray-100 p-2 cursor-pointer transition-all ${!forms?.hasPrevPage ? 'opacity-50 text-gray-600 hover:text-gray-600 hover:bg-white' : ''}`}
                                     disabled={!forms?.hasPrevPage}>
                                     <span>
@@ -131,6 +132,7 @@ const Forms: React.FC = () => {
                                 </button>
 
                                 <button
+                                    onClick={() => handlePageChange(currentPage + 1)}
                                     className={`text-gray-800 hover:text-gray-900 hover:bg-gray-100 p-2 cursor-pointer transition-all ${!forms?.hasNextPage ? 'opacity-50 text-gray-600 hover:text-gray-600 hover:bg-white' : ''}`}
                                     disabled={!forms?.hasNextPage}>
                                     <span>
