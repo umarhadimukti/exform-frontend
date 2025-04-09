@@ -110,26 +110,35 @@ const Forms: React.FC = () => {
                     </div>
 
                     <div className='mt-3 w-full py-2'>
-                        {forms?.hasPrevPage && forms?.hasNextPage && (
-                            <div className='flex justify-between items-center'>
-                                <button onClick={() => handlePageChange(currentPage-1)} className='py-2 px-3 cursor-pointer hover:bg-gray-100 rounded-sm border text-xs font-medium'>previous</button>
-                                <button onClick={() => handlePageChange(currentPage+1)} className='py-2 px-3 cursor-pointer hover:bg-gray-100 rounded-sm border text-xs font-medium'>next</button>
+                        <div className="grid grid-cols-10 gap-2">
+                            <div className='col-span-3 border'>
+                                <span className='text-sm text-gray-800 tracking-wide'>
+                                    showing <span className='font-medium'>1 </span>
+                                    to <span className='font-medium'>5 </span>
+                                    of <span className="font-medium">65 </span>
+                                    results
+                                </span>
                             </div>
-                        )}
-                        {forms?.hasPrevPage && forms?.hasNextPage || (
-                            <div>
-                                <div className="flex justify-start items-center">
-                                    {forms?.hasPrevPage && (
-                                        <button onClick={() => handlePageChange(currentPage-1)} className='py-2 px-3 cursor-pointer hover:bg-gray-100 rounded-sm border text-xs font-medium'>previous</button>
-                                    )}
-                                </div>
-                                <div className="flex justify-end items-center">
-                                    {forms?.hasNextPage && (
-                                        <button onClick={() => handlePageChange(currentPage+1)} className='py-2 px-3 cursor-pointer hover:bg-gray-100 rounded-sm border text-xs font-medium'>next</button>
-                                    )}
-                                </div>
+                            <div className='col-span-7 border flex justify-end'>
+                                <button
+                                    className={`text-gray-800 hover:text-gray-900 hover:bg-gray-100 p-2 cursor-pointer transition-all ${!forms?.hasPrevPage ? 'opacity-50 text-gray-600 hover:text-gray-600 hover:bg-white' : ''}`}
+                                    disabled={!forms?.hasPrevPage}>
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                                        </svg>
+                                    </span>
+                                </button>
+
+                                <button className='text-gray-800 hover:text-gray-900 hover:bg-gray-100 p-2 cursor-pointer transition-all'>
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                        </svg>
+                                    </span>
+                                </button>
                             </div>
-                        )}
+                        </div>
                     </div>
                 </div>
             </div>
