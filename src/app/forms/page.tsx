@@ -12,6 +12,11 @@ const Forms: React.FC = () => {
   const [ currentPage, setCurrentPage ] = useState<number>(1);
   const [ loading, setLoading ] = useState<boolean>(false);
   const [ error, setError ] = useState<string | null>(null);
+  const [ isMounted, setIsMounted ] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, [])
 
   useEffect(() => {
 
@@ -47,6 +52,11 @@ const Forms: React.FC = () => {
   const handlePageChange = (page: number): void => {
     setCurrentPage(page);
   }
+
+  if (!forms || !isMounted) return (<div className='text-xs tracking-wide w-full p-1 text-white bg-black text-center flex justify-center items-center'>loading..</div>)
+
+  const startShowingPage: number = (currentPage - 1) * (forms?.pageSize ?? 0) + 1;
+  const endShowingPage: number = Math.min(currentPage * (forms?.pageSize ?? 0), forms?.totalData ?? 0);
 
   return (
     <div className='min-h-[100vh] w-full font-[family-name:var(--font-geist-sans)]'>
@@ -97,6 +107,7 @@ const Forms: React.FC = () => {
                                         src='/images/form.jpg'
                                         alt='image'
                                         fill
+                                        sizes='1'
                                         priority
                                         className='object-cover'
                                     />
@@ -111,15 +122,15 @@ const Forms: React.FC = () => {
 
                     <div className='mt-3 w-full py-2'>
                         <div className="grid grid-cols-10 gap-2">
-                            <div className='col-span-3 border'>
+                            <div className='col-span-3'>
                                 <span className='text-sm text-gray-800 tracking-wide'>
-                                    showing <span className='font-medium'>1 </span>
-                                    to <span className='font-medium'> </span>
+                                    showing <span className='font-medium'>{ startShowingPage } </span>
+                                    to <span className='font-medium'>{ endShowingPage } </span>
                                     of <span className="font-medium">{ forms?.totalData ?? 0 } </span>
                                     results
                                 </span>
                             </div>
-                            <div className='col-span-7 border flex justify-end'>
+                            <div className='col-span-7 flex justify-end'>
                                 <button
                                     onClick={() => {
                                         handlePageChange(currentPage - 1)
