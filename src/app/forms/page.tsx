@@ -114,14 +114,16 @@ const Forms: React.FC = () => {
                             <div className='col-span-3 border'>
                                 <span className='text-sm text-gray-800 tracking-wide'>
                                     showing <span className='font-medium'>1 </span>
-                                    to <span className='font-medium'>5 </span>
-                                    of <span className="font-medium">65 </span>
+                                    to <span className='font-medium'> </span>
+                                    of <span className="font-medium">{ forms?.totalData ?? 0 } </span>
                                     results
                                 </span>
                             </div>
                             <div className='col-span-7 border flex justify-end'>
                                 <button
-                                    onClick={() => handlePageChange(currentPage - 1)}
+                                    onClick={() => {
+                                        handlePageChange(currentPage - 1)
+                                    }}
                                     className={`text-gray-800 hover:text-gray-900 hover:bg-gray-100 p-2 cursor-pointer transition-all ${!forms?.hasPrevPage ? 'opacity-50 text-gray-600 hover:text-gray-600 hover:bg-white' : ''}`}
                                     disabled={!forms?.hasPrevPage}>
                                     <span>
@@ -132,7 +134,9 @@ const Forms: React.FC = () => {
                                 </button>
 
                                 <button
-                                    onClick={() => handlePageChange(currentPage + 1)}
+                                    onClick={() => {
+                                        handlePageChange(currentPage + 1)
+                                    }}
                                     className={`text-gray-800 hover:text-gray-900 hover:bg-gray-100 p-2 cursor-pointer transition-all ${!forms?.hasNextPage ? 'opacity-50 text-gray-600 hover:text-gray-600 hover:bg-white' : ''}`}
                                     disabled={!forms?.hasNextPage}>
                                     <span>
