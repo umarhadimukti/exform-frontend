@@ -66,7 +66,7 @@ const Forms: React.FC = () => {
 
         <main className='pb-10'>
             <div className="py-[25px] bg-slate-50 border-b border-slate-100">
-                <div className="max-w-8/10 mx-auto flex justify-start items-center">
+                <div className="max-w-full sm:max-w-8/10 mx-auto flex justify-start items-center">
                     <div className="flex flex-col items-start">
                         <div className="px-8 py-2 rounded-sm shadow outline-2 outline-black hover:bg-black/80 transition-all cursor-pointer text-center text-white tracking-wide group">
                             <MdOutlinePostAdd className='text-2xl text-black group-hover:text-white transition-all'/>
@@ -75,7 +75,7 @@ const Forms: React.FC = () => {
                 </div>
             </div>
 
-            <div className="max-w-8/10 mx-auto">
+            <div className="max-w-full sm:max-w-8/10 mx-auto">
                 <div className="mt-5 mb-3">
                     <div className='flex justify-between items-center'>
                         <h5 className='tracking-wide text-gray-900'>Latest Form</h5>
@@ -99,7 +99,7 @@ const Forms: React.FC = () => {
                         </div>
                     )}
                     
-                    <div className="wrapper grid grid-cols-10 items-start w-full space-x-3 space-y-4 mt-5">
+                    <div className="wrapper grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-9 xl:grid-cols-10 items-start w-full space-x-3 space-y-4 mt-5">
                         {forms?.data.map((form: Form, index: number) => (
                             <div key={`${index}-${form?.id}`} className="col-span-2 bg-slate-50 overflow-hide border max-h-max hover:border-gray-400 transition-all duration-200 cursor-pointer">
                                 <div className="relative w-full h-[200px] border-b">
@@ -121,7 +121,7 @@ const Forms: React.FC = () => {
                     </div>
 
                     <div className='mt-3 w-full py-2'>
-                        <div className="grid grid-cols-10 gap-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-10 gap-2">
                             <div className='col-span-3'>
                                 <span className='text-sm text-gray-800 tracking-wide'>
                                     showing <span className='font-medium'>{ startShowingPage } </span>
