@@ -130,7 +130,9 @@ const Forms: React.FC = () => {
                                     </span>
                                 </button>
 
-                                <button className='text-gray-800 hover:text-gray-900 hover:bg-gray-100 p-2 cursor-pointer transition-all'>
+                                <button
+                                    className={`text-gray-800 hover:text-gray-900 hover:bg-gray-100 p-2 cursor-pointer transition-all ${!forms?.hasNextPage ? 'opacity-50 text-gray-600 hover:text-gray-600 hover:bg-white' : ''}`}
+                                    disabled={!forms?.hasNextPage}>
                                     <span>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
