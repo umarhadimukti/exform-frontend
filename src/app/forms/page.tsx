@@ -54,7 +54,7 @@ const Forms: React.FC = () => {
 
   const router = useRouter();
 
-  if (!forms || !isMounted) return (<div className='text-xs tracking-wide w-full p-1 text-white bg-black text-center flex justify-center items-center'>loading..</div>)
+  if (!forms || !isMounted) return null;
 
   const startShowingPage: number = (currentPage - 1) * (forms?.pageSize ?? 0) + 1;
   const endShowingPage: number = Math.min(currentPage * (forms?.pageSize ?? 0), forms?.totalData ?? 0);
