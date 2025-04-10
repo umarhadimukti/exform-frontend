@@ -33,7 +33,6 @@ const Forms: React.FC = () => {
             if (!response.ok) throw new Error('error while fetching forms data.');
 
             const forms = await response.json();
-            console.log(forms)
     
             setForms(forms);
         } catch (error) {
