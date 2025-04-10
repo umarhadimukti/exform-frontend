@@ -3,6 +3,8 @@
 import React from 'react'
 import Header from '@/components/header';
 import { useState } from 'react';
+import FormQuestions from '@/components/forms/c/questions';
+import FormResponses from '@/components/forms/c/responses';
 
 const FormCreate: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<string>('questions');
@@ -48,26 +50,9 @@ const FormCreate: React.FC = () => {
                     </svg>
                 </div>
             ) : currentTab === 'questions' ? (
-                <div className="w-5/10 mx-auto bg-white rounded mt-5">
-                    <div className="bg-gray-500 rounded-t p-1"></div>
-                    <div className="p-5 pb-7 flex flex-col gap-3">
-                        <input
-                            type="text"
-                            className='text-4xl text-gray-800 border-b-1 focus:border-b-2 p-1 border-gray-400 focus:border-gray-800 w-full outline-none ring-none transition-all'
-                            defaultValue='untitled form' />
-                        <input
-                            type="text"
-                            className='text-base text-gray-600 border-b-1 focus:border-b-2 p-1 border-gray-400 focus:border-gray-600 w-full outline-none ring-none transition-all'
-                            defaultValue='form description' />
-                    </div>
-                </div>
+                <FormQuestions/>
             ): currentTab === 'responses' && (
-                <div className="w-5/10 mx-auto bg-white rounded mt-5">
-                    <div className="bg-gray-500 rounded-t p-1"></div>
-                    <div className="p-5 pb-7 flex flex-col gap-3">
-                        <h5 className='text-lg text-gray-800'>all responses</h5>
-                    </div>
-                </div>
+                <FormResponses/>
             )}
         </div>
     </div>
