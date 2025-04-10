@@ -53,12 +53,12 @@ const Forms: React.FC = () => {
     setCurrentPage(page);
   }
 
+  const router = useRouter();
+
   if (!forms || !isMounted) return (<div className='text-xs tracking-wide w-full p-1 text-white bg-black text-center flex justify-center items-center'>loading..</div>)
 
   const startShowingPage: number = (currentPage - 1) * (forms?.pageSize ?? 0) + 1;
   const endShowingPage: number = Math.min(currentPage * (forms?.pageSize ?? 0), forms?.totalData ?? 0);
-
-  const router = useRouter();
 
   return (
     <div className='min-h-[100vh] w-full font-[family-name:var(--font-geist-sans)]'>
