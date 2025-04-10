@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import Header from '@/components/header'
 import { Form, FormsResponse } from '../../types/formsTypes';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const Forms: React.FC = () => {
   const [ forms, setForms ] = useState<FormsResponse | null>(null);
@@ -19,7 +20,6 @@ const Forms: React.FC = () => {
   }, [])
 
   useEffect(() => {
-
     const fetchFormsData = async () => {
         try {
             setLoading(true);
@@ -58,6 +58,8 @@ const Forms: React.FC = () => {
   const startShowingPage: number = (currentPage - 1) * (forms?.pageSize ?? 0) + 1;
   const endShowingPage: number = Math.min(currentPage * (forms?.pageSize ?? 0), forms?.totalData ?? 0);
 
+  const router = useRouter();
+
   return (
     <div className='min-h-[100vh] w-full font-[family-name:var(--font-geist-sans)]'>
         <header>
@@ -68,8 +70,10 @@ const Forms: React.FC = () => {
             <div className="py-[25px] bg-slate-50 border-b border-slate-100">
                 <div className="max-w-full sm:max-w-8/10 mx-auto flex justify-start items-center">
                     <div className="flex flex-col items-start">
-                        <div className="px-8 py-2 rounded-sm shadow outline-2 outline-black hover:bg-black/80 transition-all cursor-pointer text-center text-white tracking-wide group">
-                            <MdOutlinePostAdd className='text-2xl text-black group-hover:text-white transition-all'/>
+                        <div
+                            onClick={() => router.push('/forms/c')}
+                            className='p-2 rounded bg-gray-100 hover:bg-gray-200 transition-all'>
+                            <MdOutlinePostAdd className='text-4xl text-gray-700 hover:text-gray-900 transition-all cursor-pointer'/>
                         </div>
                     </div>
                 </div>
@@ -101,7 +105,10 @@ const Forms: React.FC = () => {
                     
                     <div className="wrapper grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-9 xl:grid-cols-10 items-start w-full space-x-3 space-y-4 mt-5">
                         {forms?.data.map((form: Form, index: number) => (
-                            <div key={`${index}-${form?.id}`} className="col-span-2 bg-slate-50 overflow-hide border max-h-max hover:border-gray-400 transition-all duration-200 cursor-pointer">
+                            <div
+                                // onClick={() => }
+                                key={`${index}-${form?.id}`}
+                                className="col-span-2 bg-slate-50 overflow-hide border max-h-max hover:border-gray-400 transition-all duration-200 cursor-pointer">
                                 <div className="relative w-full h-[200px] border-b">
                                     <Image
                                         src='/images/form.jpg'
