@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Header from '@/components/header';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const FormCreate: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<string>('questions');
