@@ -12,8 +12,8 @@ import { IoMdRadioButtonOn } from "react-icons/io";
 
 const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, onAdd, onDelete, onChange }) => {
 
+    // text area extend height
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-
     const handleInput = (): void => {
       const textarea = textareaRef.current;
       if (textarea) {
@@ -21,6 +21,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, on
         textarea.style.height = `${textarea.scrollHeight}px`;
       }
     };
+
   return (
     <div className='relative'>
         {question.type === 'first' ? (
@@ -36,7 +37,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, on
             </div>
         ) : question.type === 'regular' && (
             <div className="p-5 pb-7 flex flex-col gap-3">
-                <div className="grid grid-cols-12 items-center gap-3">
+                <div className="grid grid-cols-12 items-start gap-8">
                     <div className='col-span-7'>
                     <textarea
                         ref={textareaRef}
@@ -48,9 +49,9 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, on
                     ></textarea>
 
                     </div>
-                    <div className='col-span-5 flex justify-end border'>
+                    <div className='col-span-5 flex justify-end'>
                         <Select>
-                            <SelectTrigger className="w-[180px]">
+                            <SelectTrigger className="w-full">
                                 <SelectValue placeholder="choose options" />
                             </SelectTrigger>
                             <SelectContent>
