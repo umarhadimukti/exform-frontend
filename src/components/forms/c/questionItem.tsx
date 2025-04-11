@@ -1,7 +1,26 @@
-import React from 'react'
-import { QuestionItem as QuestionItemProps } from '@/types/formQuestionTypes'
+'use client';
+
+import React, { useRef } from 'react';
+import { QuestionItem as QuestionItemProps } from '@/types/formQuestionTypes';
+import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from '@/components/ui/select';
+import { IoText } from "react-icons/io5";
+import { MdAlternateEmail } from "react-icons/md";
+import { IoMdCheckboxOutline } from "react-icons/io";
+import { MdOutlineArrowDropDownCircle } from "react-icons/md";
+import { IoMdRadioButtonOn } from "react-icons/io";
+
 
 const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, onAdd, onDelete, onChange }) => {
+
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+    const handleInput = (): void => {
+      const textarea = textareaRef.current;
+      if (textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = `${textarea.scrollHeight}px`;
+      }
+    };
   return (
     <div className='relative'>
         {question.type === 'first' ? (
@@ -17,17 +36,46 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, on
             </div>
         ) : question.type === 'regular' && (
             <div className="p-5 pb-7 flex flex-col gap-3">
-                <div className="grid grid-cols-12 gap-3">
+                <div className="grid grid-cols-12 items-center gap-3">
                     <div className='col-span-7'>
-                        <input
-                            className='col-span-6 text-base text-gray-800 border-b-1 focus:border-b-2 border-gray-400 focus:border-gray-800 w-full outline-none ring-none transition-all'
-                            defaultValue={`question ${index+1}`} placeholder='insert question' />
+                    <textarea
+                        ref={textareaRef}
+                        onInput={handleInput}
+                        className='col-span-6 text-base text-gray-800 border-b-1 p-2 focus:bg-gray-50 focus:border-b-2 border-gray-400 focus:border-gray-800 w-full outline-none ring-none transition-all resize-none overflow-hidden'
+                        rows={1}
+                        defaultValue={`question ${index + 1}`}
+                        placeholder='insert question'
+                    ></textarea>
+
                     </div>
                     <div className='col-span-5 flex justify-end border'>
-                        <select className='col-span-3 w-[100px]' name="" id="">
-                            <option value="">1</option>
-                            <option value="">2</option>
-                        </select>
+                        <Select>
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="choose options" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="text" className='flex items-center gap-3'>
+                                    <IoText />
+                                    <span className='text-gray-700'>text</span>
+                                </SelectItem>
+                                <SelectItem value="email">
+                                    <MdAlternateEmail />
+                                    <span className='text-gray-700'>email</span>
+                                </SelectItem>
+                                <SelectItem value="checkbox">
+                                    <IoMdCheckboxOutline />
+                                    <span className='text-gray-700'>checkbox</span>
+                                </SelectItem>
+                                <SelectItem value="dropdown">
+                                    <MdOutlineArrowDropDownCircle />
+                                    <span className='text-gray-700'>dropdown</span>
+                                </SelectItem>
+                                <SelectItem value="radio">
+                                    <IoMdRadioButtonOn />
+                                    <span className='text-gray-700'>radio</span>
+                                </SelectItem>
+                            </SelectContent>
+                        </Select>
                     </div>
                 </div>
             </div>
