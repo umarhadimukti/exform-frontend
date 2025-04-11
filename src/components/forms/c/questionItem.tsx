@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { QuestionItem as QuestionItemProps } from '@/types/formQuestionTypes';
 import { Select, SelectTrigger, SelectContent, SelectValue, SelectItem } from '@/components/ui/select';
 import { IoText } from "react-icons/io5";
@@ -11,6 +11,7 @@ import { IoMdRadioButtonOn } from "react-icons/io";
 
 
 const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, onAdd, onDelete, onChange }) => {
+    const [ selectedType, setSelectedType ] = useState<string>('text');
 
     // text area extend height
     const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -39,18 +40,17 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, on
             <div className="p-5 pb-7 flex flex-col gap-3">
                 <div className="grid grid-cols-12 items-start gap-8">
                     <div className='col-span-7'>
-                    <textarea
-                        ref={textareaRef}
-                        onInput={handleInput}
-                        className='col-span-6 text-base text-gray-800 border-b-1 p-2 focus:bg-gray-50 focus:border-b-2 border-gray-400 focus:border-gray-800 w-full outline-none ring-none transition-all resize-none overflow-hidden'
-                        rows={1}
-                        defaultValue={`question ${index + 1}`}
-                        placeholder='insert question'
-                    ></textarea>
-
+                        <textarea
+                            ref={textareaRef}
+                            onInput={handleInput}
+                            className='col-span-6 text-base text-gray-800 border-b-1 p-2 focus:bg-gray-50 focus:border-b-2 border-gray-400 focus:border-gray-800 w-full outline-none ring-none transition-all resize-none overflow-hidden'
+                            rows={1}
+                            defaultValue={`question ${index}`}
+                            placeholder='insert question'
+                        ></textarea>
                     </div>
                     <div className='col-span-5 flex justify-end'>
-                        <Select>
+                        <Select onValueChange={setSelectedType}>
                             <SelectTrigger className="w-full">
                                 <SelectValue placeholder="choose options" />
                             </SelectTrigger>
@@ -77,6 +77,24 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, on
                                 </SelectItem>
                             </SelectContent>
                         </Select>
+                    </div>
+                </div>
+                <div className="grid grid-cols-12 items-center gap-3">
+                    <div className="col-span-12">
+                        {selectedType === 'dropdown' && (
+                            <div className='flex flex-col gap-3'>
+                                {[...Array(2)].map((_, index) => (
+                                    <div key={index} className='flex gap-2 items-start'>
+                                        <span className='text-gray-700 pt-1 w-[30px] text-sm'>{index+1}.</span>
+                                        <input
+                                            type="text"
+                                            placeholder={`option ${index + 1}`}
+                                            className='text-sm text-gray-700 border-b-1 focus:border-b-2 p-1 border-gray-300 focus:border-gray-700 w-full outline-none ring-none transition-all'
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
