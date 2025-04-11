@@ -32,10 +32,9 @@ const FormQuestions: React.FC = () => {
       prev.map((q) => (q.id === id ? { ...q, value } : q))
     );
   };
-  console.log(questions)
 
   return (
-    <div className="w-5/10 mx-auto  rounded mt-5">
+    <div className="w-5/10 mx-auto rounded mt-5">
         <div className="bg-gray-500 rounded-t p-1"></div>
         <div className='flex flex-col gap-3'>
             {questions.map((question, index) => {

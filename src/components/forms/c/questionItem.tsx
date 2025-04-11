@@ -47,7 +47,8 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, on
                     defaultValue='form description' />
             </div>
         ) : question.type === 'regular' && (
-            <div className="p-5 pb-7 flex flex-col gap-3">
+            <div className="p-5 pb-7 flex flex-col gap-3 relative">
+                <div className='absolute left-0 top-0 bottom-0 p-1 bg-gray-500 shadow rounded-l-xs'></div>
                 <div className="grid grid-cols-12 items-start gap-8">
                     <div className='col-span-7'>
                         <textarea
