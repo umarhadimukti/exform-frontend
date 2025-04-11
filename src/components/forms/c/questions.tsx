@@ -32,22 +32,24 @@ const FormQuestions: React.FC = () => {
       prev.map((q) => (q.id === id ? { ...q, value } : q))
     );
   };
+  console.log(questions)
 
   return (
-    <div className="w-5/10 mx-auto bg-white rounded mt-5">
+    <div className="w-5/10 mx-auto  rounded mt-5">
         <div className="bg-gray-500 rounded-t p-1"></div>
-        <div>
+        <div className='flex flex-col gap-3'>
             {questions.map((question, index) => {
                 return (
-                    <QuestionItem
-                        key={`${index}`}
-                        question={question}
-                        index={index}
-                        isLast={index === questions.length-1}
-                        onAdd={addQuestion}
-                        onChange={changeQuestion}
-                        onDelete={question.type !== 'first' ? deleteQuestion : undefined}
-                        />
+                    <div className='bg-white shadow' key={`${index}_${question.id}`}>
+                        <QuestionItem
+                            question={question}
+                            index={index}
+                            isLast={index === questions.length-1}
+                            onAdd={addQuestion}
+                            onChange={changeQuestion}
+                            onDelete={question.type !== 'first' ? deleteQuestion : undefined}
+                            />
+                    </div>
                 )
             })}
         </div>
