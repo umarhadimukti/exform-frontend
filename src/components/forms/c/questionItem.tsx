@@ -9,6 +9,7 @@ import { IoMdCheckboxOutline } from "react-icons/io";
 import { MdOutlineArrowDropDownCircle } from "react-icons/md";
 import { IoMdRadioButtonOn } from "react-icons/io";
 import { PiTrashLight } from "react-icons/pi";
+import { IoMdRadioButtonOff } from "react-icons/io";
 
 
 const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, onAdd, onDelete, onChange }) => {
@@ -92,9 +93,9 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, on
                 </div>
                 <div className="grid grid-cols-12 items-center gap-3">
                     <div className="col-span-12">
-                        {selectedType === 'dropdown' && (
+                        {selectedType === 'dropdown' ? (
                             <div className='flex flex-col gap-3'>
-                                {options.map((options: string, index: number) => (
+                                {options.map((_, index: number) => (
                                     <div key={index} className='flex gap-2 items-start relative'>
                                         <span className='text-gray-700 pt-1 w-[30px] text-sm'>{index+1}.</span>
                                         <input
@@ -112,6 +113,41 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, on
                                     <div
                                         className='text-sm text-gray-700 p-1 border-b border-white group-hover:border-b cursor-text group-hover:border-gray-400 w-[77px] outline-none ring-none transition-all'>add option</div>
                                 </div>
+                            </div>
+                        ) : selectedType === 'radio' ? (
+                            <div className='flex flex-col gap-3'>
+                                {options.map((_, index: number) => (
+                                    <div key={index} className='flex gap-2 items-start relative'>
+                                        <span className='text-gray-700 pt-2 w-[30px] text-lg'>
+                                            <IoMdRadioButtonOff/>
+                                        </span>
+                                        <input
+                                            type="text"
+                                            placeholder={`option ${index + 1}`}
+                                            className='text-sm text-gray-700 border-b-1 focus:border-b-2 p-1 border-gray-300 focus:border-gray-700 w-full outline-none ring-none transition-all'
+                                        />
+                                        <span onClick={() => handleDeleteOption(index)} className='absolute right-0 bottom-2 group'>
+                                            <PiTrashLight className='group-hover:text-red-500 transition-all duration-300 cursor-pointer'/>
+                                        </span>
+                                    </div>
+                                ))}
+                                <div onClick={handleAddOption} className='flex gap-2 w-[127px] items-start group'>
+                                    <span className='pt-1 w-[30px] text-sm cursor-pointer text-gray-500 group-hover:text-gray-800'>(+)</span>
+                                    <div
+                                        className='text-sm text-gray-700 p-1 border-b border-white group-hover:border-b cursor-text group-hover:border-gray-400 w-[77px] outline-none ring-none transition-all'>add option</div>
+                                </div>
+                            </div>
+                        ) : selectedType === 'checkbox' ? (
+                            <div>
+
+                            </div>
+                        ): selectedType === 'email' ? (
+                            <div>
+
+                            </div>
+                        ) : selectedType === 'text' && (
+                            <div>
+
                             </div>
                         )}
                     </div>
