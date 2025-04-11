@@ -163,11 +163,21 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, on
                             </div>
                         ): selectedType === 'email' ? (
                             <div>
-
+                                <input
+                                    disabled
+                                    type="email"
+                                    placeholder='email address'
+                                    className='text-sm text-gray-700 border-b-1 focus:border-b-2 p-1 border-gray-300 focus:border-gray-700 w-full outline-none ring-none transition-all'
+                                />
                             </div>
                         ) : selectedType === 'text' && (
                             <div>
-
+                                <input
+                                    disabled
+                                    type="text"
+                                    placeholder='text'
+                                    className='text-sm text-gray-700 border-b-1 focus:border-b-2 p-1 border-gray-300 focus:border-gray-700 w-full outline-none ring-none transition-all'
+                                />
                             </div>
                         )}
                     </div>
