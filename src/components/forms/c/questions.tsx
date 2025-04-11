@@ -1,18 +1,55 @@
-import React from 'react'
+'use client';
 
-const FormQuestions = () => {
+import React, { useState } from 'react'
+import QuestionItem from './questionItem';
+import { QuestionType } from '../../../types/formQuestionTypes';
+
+
+const FormQuestions: React.FC = () => {
+  const [ questions, setQuestions ] = useState<QuestionType[]>([
+    {
+        id: Date.now(),
+        value: 'untitled form',
+        type: 'first',
+    }
+  ]);
+
+  const addQuestion = () => {
+    const newQuestion: QuestionType = {
+        id: Date.now(),
+        value: '',
+        type: 'regular',
+    }
+    setQuestions([...questions, newQuestion]);
+  }
+
+  const deleteQuestion = (id: number) => {
+    setQuestions((prev: QuestionType[]) => prev.filter((q: QuestionType) => q.id !== id));
+  }
+
+  const changeQuestion = (id: number, value: string) => {
+    setQuestions((prev) =>
+      prev.map((q) => (q.id === id ? { ...q, value } : q))
+    );
+  };
+
   return (
     <div className="w-5/10 mx-auto bg-white rounded mt-5">
         <div className="bg-gray-500 rounded-t p-1"></div>
-        <div className="p-5 pb-7 flex flex-col gap-3">
-            <input
-                type="text"
-                className='text-4xl text-gray-800 border-b-1 focus:border-b-2 p-1 border-gray-400 focus:border-gray-800 w-full outline-none ring-none transition-all'
-                defaultValue='untitled form' />
-            <input
-                type="text"
-                className='text-base text-gray-600 border-b-1 focus:border-b-2 p-1 border-gray-400 focus:border-gray-600 w-full outline-none ring-none transition-all'
-                defaultValue='form description' />
+        <div>
+            {questions.map((question, index) => {
+                return (
+                    <QuestionItem
+                        key={`${index}`}
+                        question={question}
+                        index={index}
+                        isLast={index === questions.length-1}
+                        onAdd={addQuestion}
+                        onChange={changeQuestion}
+                        onDelete={question.type !== 'first' ? deleteQuestion : undefined}
+                        />
+                )
+            })}
         </div>
     </div>
   )
