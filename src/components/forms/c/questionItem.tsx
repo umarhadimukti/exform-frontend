@@ -17,10 +17,19 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, on
             </div>
         ) : question.type === 'regular' && (
             <div className="p-5 pb-7 flex flex-col gap-3">
-                <input
-                    type="text"
-                    className='text-base text-gray-800 border-b-1 focus:border-b-2 p-1 border-gray-400 focus:border-gray-800 w-full outline-none ring-none transition-all'
-                    defaultValue={`question ${index+1}`} />
+                <div className="grid grid-cols-12 gap-3">
+                    <div className='col-span-7'>
+                        <input
+                            className='col-span-6 text-base text-gray-800 border-b-1 focus:border-b-2 border-gray-400 focus:border-gray-800 w-full outline-none ring-none transition-all'
+                            defaultValue={`question ${index+1}`} placeholder='insert question' />
+                    </div>
+                    <div className='col-span-5 flex justify-end border'>
+                        <select className='col-span-3 w-[100px]' name="" id="">
+                            <option value="">1</option>
+                            <option value="">2</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         )}
 
