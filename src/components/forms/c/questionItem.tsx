@@ -94,7 +94,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, on
                 </div>
                 <div className="grid grid-cols-12 items-center gap-3">
                     <div className="col-span-12">
-                        {selectedType === 'dropdown' ? (
+                        { selectedType === 'dropdown' ? (
                             <div className='flex flex-col gap-3'>
                                 {options.map((_, index: number) => (
                                     <div key={index} className='flex gap-2 items-start relative'>
@@ -161,7 +161,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, on
                                         className='text-sm text-gray-700 p-1 border-b border-white group-hover:border-b cursor-text group-hover:border-gray-400 w-[77px] outline-none ring-none transition-all'>add option</div>
                                 </div>
                             </div>
-                        ): selectedType === 'email' ? (
+                        ) : selectedType === 'email' ? (
                             <div>
                                 <input
                                     disabled
@@ -179,7 +179,21 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, on
                                     className='text-sm text-gray-700 border-b-1 focus:border-b-2 p-1 border-gray-300 focus:border-gray-700 w-full outline-none ring-none transition-all'
                                 />
                             </div>
-                        )}
+                        ) }
+                    </div>
+                </div>
+                <div className="mt-2">
+                    <div className='flex justify-end gap-3'>
+                        <div className='group'>
+                            <PiTrashLight className='group-hover:text-red-500 transition-all duration-300 cursor-pointer text-xl'/>
+                        </div>
+                        <div>
+                            <label className="inline-flex items-center cursor-pointer">
+                            <input type="checkbox" value="" className="sr-only peer" />
+                            <div className="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                            <span className="ms-3 text-sm font-medium text-gray-900">required</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
