@@ -14,7 +14,7 @@ import { MdCheckBoxOutlineBlank } from "react-icons/md";
 
 
 const QuestionItem: React.FC<QuestionItemProps> = ({ question, index, isLast, onAdd, onDelete, onChange }) => {
-    const [ selectedType, setSelectedType ] = useState<string>('text');
+    const [ selectedType, setSelectedType ] = useState<string>('');
     const [ options, setOptions ] = useState<string[]>([]);
 
     const handleAddOption = (): void => {
