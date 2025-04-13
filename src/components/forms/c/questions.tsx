@@ -33,8 +33,6 @@ const FormQuestions: React.FC = () => {
     );
   };
 
-  console.log(questions)
-
   return (
     <div className="w-5/10 mx-auto rounded mt-5 mb-20">
         <div className="bg-gray-500 rounded-t p-1"></div>
